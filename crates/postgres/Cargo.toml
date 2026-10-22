@@ -1,0 +1,23 @@
+[package]
+name = "engine-postgres"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Durable pgvector vector engine and an embedding spend ceiling"
+publish = false
+
+[dependencies]
+async-trait.workspace = true
+chrono.workspace = true
+serde_json.workspace = true
+sqlx.workspace = true
+tracing.workspace = true
+engine-core.workspace = true
+engine-embedding.workspace = true
+engine-vector.workspace = true
+
+[dev-dependencies]
+anyhow.workspace = true
+tokio.workspace = true
+uuid.workspace = true

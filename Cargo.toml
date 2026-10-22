@@ -1,0 +1,68 @@
+[package]
+name = "hybrid-retrieval"
+description = "Umbrella crate: hybrid retrieval, memory, knowledge graph and context budgeting engines"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[workspace]
+members = [
+  ".",
+  "crates/engine-core",
+  "crates/engines/*",
+  "crates/postgres",
+]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.90"
+license = "MIT"
+
+[workspace.dependencies]
+async-trait = "0.1"
+chrono = { version = "0.4", features = ["serde"] }
+futures = "0.3"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+tokio = { version = "1", features = ["sync", "time", "macros", "rt-multi-thread"] }
+tracing = "0.1"
+uuid = { version = "1", features = ["v4", "serde"] }
+sqlx = { version = "0.9", default-features = false, features = ["runtime-tokio", "postgres", "uuid", "chrono", "json"] }
+anyhow = "1"
+
+engine-core = { path = "crates/engine-core" }
+engine-embedding = { path = "crates/engines/embedding" }
+engine-vector = { path = "crates/engines/vector" }
+engine-retrieval = { path = "crates/engines/retrieval" }
+engine-memory = { path = "crates/engines/memory" }
+engine-knowledge-graph = { path = "crates/engines/knowledge-graph" }
+engine-context = { path = "crates/engines/context" }
+engine-postgres = { path = "crates/postgres" }
+
+[features]
+default = []
+# Durable pgvector adapter and the embedding spend ceiling. Pulls in sqlx.
+postgres = ["dep:engine-postgres"]
+
+[dependencies]
+async-trait.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+engine-core.workspace = true
+engine-embedding.workspace = true
+engine-vector.workspace = true
+engine-retrieval.workspace = true
+engine-memory.workspace = true
+engine-knowledge-graph.workspace = true
+engine-context.workspace = true
+engine-postgres = { workspace = true, optional = true }
+
+[dev-dependencies]
+chrono.workspace = true
+tokio.workspace = true
+
